@@ -51,7 +51,10 @@ export default class Ballot extends React.Component {
 
   reset() {
     this.setState({selectedNominees: {}});
+    this.resetDB();
+  }
 
+  resetDB() {
     console.log('Updating...');
     window.firebase.database().ref(this.firebaseRef).set({}).then((res) => {
       console.log('Updated...');
@@ -64,7 +67,10 @@ export default class Ballot extends React.Component {
     const newSelectedNominees = _.clone(this.state.selectedNominees);
     newSelectedNominees[category] = nominee.name;
     this.setState({selectedNominees: newSelectedNominees});
+    this.selectNomineeForCategoryDB(nominee, category);
+  }
 
+  selectNomineeForCategoryDB(nominee, category) {
     const updates = {};
     const ref = `${this.firebaseRef}/${category}`;
     updates[ref] = nominee.name;
@@ -156,9 +162,14 @@ class Row extends React.Component {
         cols =  '';
     }
 
+
     return (
       <div className={`nytint-ballot-row nytint-${this.props.columns}col clearfix`}>
         {_.map(this.props.categories, (category, index) => {
+
+          const selectedNomineeName = this.props.selectedNominees[category.title];
+          const selectedNominee = _.find(category.nominees, {name: selectedNomineeName});
+
           return (
             <Category
               {...category}
@@ -166,7 +177,7 @@ class Row extends React.Component {
               crop={this.props.crop}
               cols={cols}
               selectNomineeForCategory={this.props.selectNomineeForCategory}
-              selectedNominee={this.props.selectedNominees[category.title]}
+              selectedNominee={selectedNominee}
               key={index}
             />
           );
@@ -184,15 +195,14 @@ class Category extends React.Component {
     super(props)
     this.state = {
       hoverNominee: null,
-      selectedNominee: null,
     }
   }
 
   activeImage() {
     if (this.state.hoverNominee) {
       return this.state.hoverNominee.image;
-    } else if (this.state.selectedNominee) {
-      return this.state.selectedNominee.image;
+    } else if (this.props.selectedNominee) {
+      return this.props.selectedNominee.image;
     } else {
       return this.props.nominees[0].image
     }
@@ -228,7 +238,7 @@ class Category extends React.Component {
                 onMouseEnter={() => {this.setState({hoverNominee: nominee})}}
                 onMouseLeave={() => {this.setState({hoverNominee: null})}}
                 onClick={() => {this.props.selectNomineeForCategory(nominee, this.props.title)}}
-                selected={this.props.selectedNominee === nominee.name}
+                selected={this.props.selectedNominee && this.props.selectedNominee.name === nominee.name}
                 key={index}
               />
             ))}
@@ -264,11 +274,8 @@ class Answer extends React.Component {
 
 class Image extends React.Component {
   render() {
-    const filteredCrops = _.filter(this.props.imageData.crops, (crop) => {
-      return crop.type === this.props.crop;
-    });
-    const content = filteredCrops[0].content;
-    const src = `${this.props.imageData.host}${content}`;
+    const crop = _.find(this.props.imageData.crops, {'type': this.props.crop});
+    const src = `${this.props.imageData.host}${crop.content}`;
     return (
       <figure className={cx('media', this.props.active ? 'active' : null)}>
         <img src={src} />
