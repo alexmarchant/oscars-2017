@@ -21,7 +21,7 @@ export default class Main extends React.Component {
             <button onClick={this.logOut}>Log Out</button>
           </div>
         </div>
-        <Ballot />
+        <Ballot currentUser={this.props.currentUser} />
       </div>
     );
   }

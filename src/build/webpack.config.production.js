@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const S3Plugin = require('webpack-s3-plugin')
 const AWSCredentials = require('../../aws-credentials.json');
-var webpackConfig = requre('./webpack.config.js');
+var webpackConfig = require('./webpack.config.js');
 
 // Better full source maps for production (they are slow to build
 // so only use them in production
@@ -13,6 +13,7 @@ webpackConfig.plugins.push(
     s3Options: {
       accessKeyId: AWSCredentials.accessKeyId,
       secretAccessKey: AWSCredentials.secretAccessKey,
+      region: 'us-east-1',
     },
     s3UploadOptions: {
       Bucket: 'oscars.alexmarchant.com'
@@ -24,4 +25,4 @@ webpackConfig.plugins.push(
   })
 );
 
-module.exports webpackConfig;
+module.exports = webpackConfig;

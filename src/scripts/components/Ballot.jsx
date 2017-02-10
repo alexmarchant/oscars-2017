@@ -24,10 +24,23 @@ export default class Ballot extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedNominees: {},
+      loaded: false,
+      selectedNominees: {}
     };
+    this.firebaseRef = `users/${this.props.currentUser.uid}/ballot`;
     this.reset = this.reset.bind(this);
     this.selectNomineeForCategory = this.selectNomineeForCategory.bind(this);
+  }
+
+  componentDidMount() {
+    console.log('Loading...');
+    window.firebase.database().ref(this.firebaseRef).on('value', (snapshot) => {
+      console.log('Snapshot received...');
+      this.setState({
+        loaded: true,
+        selectedNominees: snapshot.val() || {},
+      });
+    });
   }
 
   percentComplete() {
@@ -38,14 +51,32 @@ export default class Ballot extends React.Component {
 
   reset() {
     this.setState({selectedNominees: {}});
+
+    console.log('Updating...');
+    window.firebase.database().ref(this.firebaseRef).set({}).then((res) => {
+      console.log('Updated...');
+    }, (err) => {
+      console.error(`Error... ${err}`);
+    });
   }
 
   selectNomineeForCategory(nominee, category) {
-    const newSelectedNominees = _.assign(
-      this.state.selectedNominees, 
-      {[category]: nominee.name}
-    );
+    const newSelectedNominees = _.clone(this.state.selectedNominees);
+    newSelectedNominees[category] = nominee.name;
     this.setState({selectedNominees: newSelectedNominees});
+
+    const updates = {};
+    const ref = `${this.firebaseRef}/${category}`;
+    updates[ref] = nominee.name;
+
+    if (this.state.loaded) {
+      console.log('Updating...');
+      window.firebase.database().ref().update(updates).then((res) => {
+        console.log('Updated...');
+      }, (err) => {
+        console.error(`Error... ${err}`);
+      });
+    }
   }
 
   render() {

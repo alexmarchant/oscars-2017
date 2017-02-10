@@ -30,6 +30,7 @@ module.exports = {
   },
   plugins: [new HtmlWebpackPlugin({
     title: 'Oscar Pool 2017',
+    favicon: path.resolve(__dirname, '..', 'images', 'favicon.ico'),
     template: path.resolve(__dirname, '..', 'templates', 'index.ejs'),
   })],
   devtool: 'cheap-module-eval-source-map',
