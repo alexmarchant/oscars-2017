@@ -3,7 +3,6 @@ import categories from '../categories.js';
 import images from '../images.js';
 import _ from 'lodash';
 import cx from 'classnames';
-
 import '../../styles/ballot-nytimes-1.scss';
 import '../../styles/ballot-nytimes-2.scss';
 import '../../styles/ballot.scss';
@@ -19,33 +18,34 @@ const rows = [
   {columns: 3, categories: 3},
   {columns: 3, categories: 3},
   {columns: 3, categories: 3},
-  {columns: 3, categories: 0},
 ];
 
 export default class Ballot extends React.Component {
   constructor(props) {
     super(props)
-
-    this.state = {};
-
+    this.state = {
+      selectedNominees: {},
+    };
     this.reset = this.reset.bind(this);
+    this.selectNomineeForCategory = this.selectNomineeForCategory.bind(this);
   }
 
   percentComplete() {
-    //    const filledFields = _.reduce(this.categories(), (sum, category) => {
-    //      if (this.state[category] == null) { return sum; }
-    //      else { return sum + 1; } 
-    //    }, 0);
-    //    const percentFilledFields = filledFields / this.categories().length;
-    //    const roundedPercentFilledFields = Math.round(percentFilledFields * 100);
-    //    return `${roundedPercentFilledFields}%`;
-    return '0%';
+    const percent = Object.keys(this.state.selectedNominees).length / categories.length;
+    const roundedPercent = Math.round(percent * 100);
+    return `${roundedPercent}%`;
   }
 
   reset() {
-    // const newState = {};
-    // _.each(this.categories(), (category) => { newState[category] = null; });
-    // this.setState(newState);
+    this.setState({selectedNominees: {}});
+  }
+
+  selectNomineeForCategory(nominee, category) {
+    const newSelectedNominees = _.assign(
+      this.state.selectedNominees, 
+      {[category]: nominee.name}
+    );
+    this.setState({selectedNominees: newSelectedNominees});
   }
 
   render() {
@@ -64,10 +64,14 @@ export default class Ballot extends React.Component {
               columns={row.columns}
               showImages={row.showImages}
               crop={row.crop}
+              selectNomineeForCategory={this.selectNomineeForCategory}
+              selectedNominees={this.state.selectedNominees}
               key={index}
             />
           );
         })}
+
+        <div className="nytint-ballot-row nytint-3col clearfix"></div>
       </div>
     );
   }
@@ -130,15 +134,14 @@ class Row extends React.Component {
               showImages={this.props.showImages}
               crop={this.props.crop}
               cols={cols}
+              selectNomineeForCategory={this.props.selectNomineeForCategory}
+              selectedNominee={this.props.selectedNominees[category.title]}
               key={index}
             />
           );
         })}
         {_.map(_.range(emptyCols), (n) => (
-          <div className="multiple-choice-question unanswered has-selected" key={n}>
-            <div className={`nytint-ballot-category nytint-cols-${cols}`}>
-            </div>
-          </div>
+          <div className={`nytint-ballot-category nytint-cols-${cols}`} key={n}></div>
         ))}
       </div>
     );
@@ -190,8 +193,11 @@ class Category extends React.Component {
             {_.map(this.props.nominees, (nominee, index) => (
               <Answer
                 title={nominee.name}
+                subtitle={nominee.name !== nominee.film ? nominee.film : false}
                 onMouseEnter={() => {this.setState({hoverNominee: nominee})}}
                 onMouseLeave={() => {this.setState({hoverNominee: null})}}
+                onClick={() => {this.props.selectNomineeForCategory(nominee, this.props.title)}}
+                selected={this.props.selectedNominee === nominee.name}
                 key={index}
               />
             ))}
@@ -209,6 +215,7 @@ class Answer extends React.Component {
         className={'answer nytint-ballot-nominee question-unanswered' + (this.props.selected ? ' selected' : '')}
         onMouseEnter={this.props.onMouseEnter}
         onMouseLeave={this.props.onMouseLeave}
+        onClick={this.props.onClick}
       >
         <div className="nytint-ballot-nominee-inner">
           <span className="nytint-vote-target" >&nbsp;</span>
