@@ -802,5 +802,5 @@ export default [{
     film: "13 Hours",
     winner: !1
   }]
-}]
-                                        }
+}];
+

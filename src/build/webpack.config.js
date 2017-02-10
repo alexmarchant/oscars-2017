@@ -29,7 +29,7 @@ module.exports = {
     ],
   },
   plugins: [new HtmlWebpackPlugin({
-    title: 'Oscar Pool 2016',
+    title: 'Oscar Pool 2017',
     template: path.resolve(__dirname, '..', 'templates', 'index.ejs'),
   })],
   devtool: 'cheap-module-eval-source-map',
