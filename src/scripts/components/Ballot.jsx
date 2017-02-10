@@ -52,7 +52,7 @@ export default class Ballot extends React.Component {
     var currentCategoryIndex = 0;
 
     return (
-      <div className="ballot">
+      <div className="ballot nytint-can-vote">
         <Header reset={this.reset} percentComplete={this.percentComplete()} />
 
         {_.map(rows, (row, index) => {

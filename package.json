@@ -16,7 +16,8 @@
     "sass-loader": "^5.0.1",
     "style-loader": "^0.13.1",
     "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.3.0"
+    "webpack-dev-server": "^2.3.0",
+    "webpack-s3-plugin": "^0.9.2"
   },
   "dependencies": {
     "classnames": "^2.2.5",
@@ -28,6 +29,6 @@
   },
   "scripts": {
     "start": "webpack-dev-server --config src/build/webpack.config.js --progress --colors",
-    "build": "webpack --config src/build/webpack.config.js"
+    "deploy": "webpack -p --config src/build/webpack.config.production.js"
   }
 }
