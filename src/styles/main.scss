@@ -1,0 +1,35 @@
+.main {
+  max-width: 1170px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.main__header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 3000;
+  background-color: white;
+}
+
+.main__header-content {
+  max-width: 1170px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 60px;
+}
+
+.main__header-content > * {
+  margin-left: 20px;
+}
+
+.main__header-profile {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+}
