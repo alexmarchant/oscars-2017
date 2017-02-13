@@ -38,10 +38,14 @@ export default class Ballot extends React.Component {
     console.log('Loading...');
     window.firebase.database().ref(this.firebaseRef).on('value', (snapshot) => {
       console.log('Snapshot received...');
+      const selectedNominees = snapshot.val() || {};
+      if (selectedNominees[paid]) { delete selectedNominees[paid]; }
+      const paid = snapshot.val() ? snapshot.val().paid : false;
+
       this.setState({
         loaded: true,
-        selectedNominees: snapshot.val() || {},
-        paid: snapshot.val().paid || false,
+        selectedNominees: selectedNominees,
+        paid: paid,
       });
     });
   }
