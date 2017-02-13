@@ -12,7 +12,7 @@ export default class Auth extends React.Component {
         },
       },
       signInOptions: [
-        window.firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        window.firebase.auth.FacebookAuthProvider.PROVIDER_ID,
       ],
       signInFlow: 'popup',
       tosUrl: '/#tos'
