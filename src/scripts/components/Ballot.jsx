@@ -38,8 +38,10 @@ export default class Ballot extends React.Component {
     console.log('Loading...');
     window.firebase.database().ref(this.firebaseRef).on('value', (snapshot) => {
       console.log('Snapshot received...');
-      const selectedNominees = snapshot.val() || {};
-      if (selectedNominees[paid]) { delete selectedNominees[paid]; }
+
+      var selectedNominees = snapshot.val() || {};
+      selectedNominees = _.omitBy(snapshot.val(), (value, key) => ( key === 'paid' ));
+      console.log(selectedNominees);
       const paid = snapshot.val() ? snapshot.val().paid : false;
 
       this.setState({
@@ -51,7 +53,10 @@ export default class Ballot extends React.Component {
   }
 
   percentComplete() {
-    const percent = Object.keys(this.state.selectedNominees).length / categories.length;
+    const fieldCount = categories.length + 1;
+    const filledFieldCount = Object.keys(this.state.selectedNominees).length +
+      (this.state.paid ? 1 : 0);
+    const percent = filledFieldCount / fieldCount;
     const roundedPercent = Math.round(percent * 100);
     return `${roundedPercent}%`;
   }
@@ -128,18 +133,20 @@ export default class Ballot extends React.Component {
       <div className="ballot nytint-can-vote">
         <Header reset={this.reset} percentComplete={this.percentComplete()} />
 
-        <h4>Instructions</h4>
-        <ol>
-          <li>Fill out this form</li>
-          <li><a href="https://venmo.com" target="_blank">Send $5 to @amarchant on venmo</a></li>
-        </ol>
+        <div className="nytint-ballot-row nytint-1col clearfix">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Fill out this form</li>
+            <li><a href="https://venmo.com" target="_blank">Send $5 to @amarchant on venmo</a></li>
+          </ol>
 
-        <h4>Rules</h4>
-        <ul>
-          <li>All forms need to be completed and payments in before the oscars start (Feb 26 8:30PM EST). I'll lock the form at that point too.</li>
-          <li>Each category has a certain number of points assigned. If you get the category right you get the points. Person with the most points wins. Winner take all.</li>
-          <li>In case of a tie, the pot will be split evenly.</li>
-        </ul>
+          <h4>Rules</h4>
+          <ul>
+            <li>All forms need to be completed and payments in before the oscars start (Feb 26 8:30PM EST). I'll lock the form at that point too.</li>
+            <li>Each category has a certain number of points assigned. If you get the category right you get the points. Person with the most points wins. Winner take all.</li>
+            <li>In case of a tie, the pot will be split evenly.</li>
+          </ul>
+        </div>
 
         {_.map(rows, (row, index) => {
           const rowCategories = categories.slice(currentCategoryIndex, currentCategoryIndex + row.categories);
@@ -159,11 +166,19 @@ export default class Ballot extends React.Component {
 
         <div className="nytint-ballot-row nytint-3col clearfix"></div>
 
-        <Answer
-          title="I paid $5 to @amarchant on venmo"
-          onClick={this.togglePaid}
-          selected={this.state.paid}
-        />
+        <div className="nytint-ballot-row nytint-1col clearfix">
+          <Answer
+            title="I paid $5 to @amarchant on venmo"
+            onClick={this.togglePaid}
+            selected={this.state.paid}
+          />
+        </div>
+
+        <div className="nytint-ballot-row nytint-1col clearfix">
+          <h2 className="ballot__footer-message">
+            Your answers are continuously saved as you filled out the form, you're all set!
+          </h2>
+        </div>
       </div>
     );
   }

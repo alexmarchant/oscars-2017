@@ -1,6 +1,7 @@
 .ballot {
-  margin-top: 180px;
+  margin-top: 200px;
   position: relative;
+  margin-bottom: 50px;
 }
 
 .ballot__header-container {
@@ -39,4 +40,10 @@
 .nytint-ballot-category-title p {
   font: 300 12px/1.25em nyt-franklin,arial,helvetica,sans-serif;
   color: #999;
+}
+
+.ballot__footer-message {
+  margin-top: 50px;
+  text-align: center;
+  color: green;
 }
