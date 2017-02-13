@@ -19,10 +19,25 @@
   border-top: 1px solid #ccc;
 }
 
+.ballot ol,
+.ballot ul,
+.ballot li {
+  padding-left: 0;
+}
+
+.ballot ul {
+  list-style-type: disc;
+}
+
 .answer {
   cursor: pointer;
 }
 
 .nytint-ballot-nominee-subtitle {
+  color: #999;
+}
+
+.nytint-ballot-category-title p {
+  font: 300 12px/1.25em nyt-franklin,arial,helvetica,sans-serif;
   color: #999;
 }

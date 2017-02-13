@@ -25,11 +25,13 @@ export default class Ballot extends React.Component {
     super(props)
     this.state = {
       loaded: false,
-      selectedNominees: {}
+      selectedNominees: {},
+      paid: false,
     };
     this.firebaseRef = `users/${this.props.currentUser.uid}/ballot`;
     this.reset = this.reset.bind(this);
     this.selectNomineeForCategory = this.selectNomineeForCategory.bind(this);
+    this.togglePaid = this.togglePaid.bind(this);
   }
 
   componentDidMount() {
@@ -39,6 +41,7 @@ export default class Ballot extends React.Component {
       this.setState({
         loaded: true,
         selectedNominees: snapshot.val() || {},
+        paid: snapshot.val().paid || false,
       });
     });
   }
@@ -50,11 +53,15 @@ export default class Ballot extends React.Component {
   }
 
   reset() {
+    if (!this.state.loaded) { return; }
+
     this.setState({selectedNominees: {}});
     this.resetDB();
   }
 
   resetDB() {
+    if (!this.state.loaded) { return; }
+
     console.log('Updating...');
     window.firebase.database().ref(this.firebaseRef).set({}).then((res) => {
       console.log('Updated...');
@@ -64,6 +71,8 @@ export default class Ballot extends React.Component {
   }
 
   selectNomineeForCategory(nominee, category) {
+    if (!this.state.loaded) { return; }
+
     const newSelectedNominees = _.clone(this.state.selectedNominees);
     newSelectedNominees[category] = nominee.name;
     this.setState({selectedNominees: newSelectedNominees});
@@ -71,18 +80,41 @@ export default class Ballot extends React.Component {
   }
 
   selectNomineeForCategoryDB(nominee, category) {
+    if (!this.state.loaded) { return; }
+
     const updates = {};
     const ref = `${this.firebaseRef}/${category}`;
     updates[ref] = nominee.name;
 
-    if (this.state.loaded) {
-      console.log('Updating...');
-      window.firebase.database().ref().update(updates).then((res) => {
-        console.log('Updated...');
-      }, (err) => {
-        console.error(`Error... ${err}`);
-      });
-    }
+    console.log('Updating...');
+    window.firebase.database().ref().update(updates).then((res) => {
+      console.log('Updated...');
+    }, (err) => {
+      console.error(`Error... ${err}`);
+    });
+  }
+
+  togglePaid() {
+    if (!this.state.loaded) { return; }
+
+    const newPaidVal = !this.state.paid;
+    this.setState({paid: newPaidVal});
+    this.togglePaidDB(newPaidVal);
+  }
+
+  togglePaidDB(val) {
+    if (!this.state.loaded) { return; }
+
+    const updates = {};
+    const ref = `${this.firebaseRef}/paid`;
+    updates[ref] = val;
+
+    console.log('Updating...');
+    window.firebase.database().ref().update(updates).then((res) => {
+      console.log('Updated...');
+    }, (err) => {
+      console.error(`Error... ${err}`);
+    });
   }
 
   render() {
@@ -91,6 +123,20 @@ export default class Ballot extends React.Component {
     return (
       <div className="ballot nytint-can-vote">
         <Header reset={this.reset} percentComplete={this.percentComplete()} />
+
+        <h4>Instructions</h4>
+        <ol>
+          <li>Fill out this form</li>
+          <li><a href="https://venmo.com">Send $5 to @amarchant on venmo</a></li>
+        </ol>
+
+        <h4>Rules</h4>
+        <ul>
+          <li>All forms need to be completed and payments in before the oscars start (Feb 26 8:30PM EST). I'll lock the form at that point too.</li>
+          <li>Each category has a certain number of points assigned. If you get the category right you get the points. Person with the most points wins. Winner take all.</li>
+          <li>In case of a tie, the pot will be split evenly.</li>
+          <li>If somehow we get an unexpected number of people playing, > 40, we'll split among the top 3 winners 65% 25% 15%</li>
+        </ul>
 
         {_.map(rows, (row, index) => {
           const rowCategories = categories.slice(currentCategoryIndex, currentCategoryIndex + row.categories);
@@ -109,6 +155,12 @@ export default class Ballot extends React.Component {
         })}
 
         <div className="nytint-ballot-row nytint-3col clearfix"></div>
+
+        <Answer
+          title="I paid $5 to @amarchant on venmo"
+          onClick={this.togglePaid}
+          selected={this.state.paid}
+        />
       </div>
     );
   }
@@ -213,7 +265,8 @@ class Category extends React.Component {
       <div className="multiple-choice-question unanswered has-selected" >
         <div className={`nytint-ballot-category nytint-cols-${this.props.cols}`}>
           <div className="nytint-ballot-category-title">
-            <h5 >{this.props.title}</h5>
+            <h5>{this.props.title}</h5>
+            <p>{this.props.points} Point{this.props.points > 1 ? 's' : ''}</p>
           </div>
           {
             this.props.showImages ?

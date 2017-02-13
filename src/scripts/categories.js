@@ -1,5 +1,6 @@
 export default [{
   title: "Best Picture",
+  points: 5,
   nominees: [{
     name: "Arrival",
     image: "100000004760117",
@@ -57,6 +58,7 @@ export default [{
   }]
 }, {
   title: "Director",
+  points: 5,
   nominees: [{
     name: "Damien Chazelle",
     image: "100000004783118",
@@ -90,6 +92,7 @@ export default [{
   }]
 }, {
   title: "Actor in a Leading Role",
+  points: 5,
   nominees: [{
     name: "Casey Affleck",
     image: "100000004649141",
@@ -123,6 +126,7 @@ export default [{
   }]
 }, {
   title: "Actress in a Leading Role",
+  points: 5,
   nominees: [{
     name: "Isabelle Huppert",
     image: "100000004761777",
@@ -156,6 +160,7 @@ export default [{
   }]
 }, {
   title: "Actor in a Supporting Role",
+  points: 4,
   nominees: [{
     name: "Mahershala Ali",
     image: "100000004887969",
@@ -189,6 +194,7 @@ export default [{
   }]
 }, {
   title: "Actress in a Supporting Role",
+  points: 4,
   nominees: [{
     name: "Viola Davis",
     image: "100000004859851",
@@ -222,6 +228,7 @@ export default [{
   }]
 }, {
   title: "Original Screenplay",
+  points: 4,
   nominees: [{
     name: "20th Century Women",
     image: "100000004842528",
@@ -255,6 +262,7 @@ export default [{
   }]
 }, {
   title: "Adapted Screenplay",
+  points: 4,
   nominees: [{
     name: "Arrival",
     image: "100000004760117",
@@ -288,6 +296,7 @@ export default [{
   }]
 }, {
   title: "Foreign Language Film",
+  points: 1,
   nominees: [{
     name: "A Man Called Ove",
     image: null,
@@ -321,6 +330,7 @@ export default [{
   }]
 }, {
   title: "Animated Feature",
+  points: 3,
   nominees: [{
     name: "Kubo and the Two Strings",
     image: null,
@@ -354,6 +364,7 @@ export default [{
   }]
 }, {
   title: "Sound Editing",
+  points: 3,
   nominees: [{
     name: "Arrival",
     image: "100000004760117",
@@ -387,6 +398,7 @@ export default [{
   }]
 }, {
   title: "Visual Effects",
+  points: 3,
   nominees: [{
     name: "Deepwater Horizon",
     image: null,
@@ -420,6 +432,7 @@ export default [{
   }]
 }, {
   title: "Film Editing",
+  points: 3,
   nominees: [{
     name: "Arrival",
     image: "100000004760117",
@@ -453,6 +466,7 @@ export default [{
   }]
 }, {
   title: "Short Film, Animated",
+  points: 1,
   nominees: [{
     name: "Blind Vaysha",
     image: null,
@@ -486,6 +500,7 @@ export default [{
   }]
 }, {
   title: "Short Film, Live Action",
+  points: 1,
   nominees: [{
     name: "Ennemis Interieurs",
     image: null,
@@ -519,6 +534,7 @@ export default [{
   }]
 }, {
   title: "Documentary Short Subject",
+  points: 1,
   nominees: [{
     name: "4.1 Miles",
     image: null,
@@ -552,6 +568,7 @@ export default [{
   }]
 }, {
   title: "Original Score",
+  points: 3,
   nominees: [{
     name: "Jackie",
     image: "100000004799255",
@@ -585,6 +602,7 @@ export default [{
   }]
 }, {
   title: "Original Song",
+  points: 3,
   nominees: [{
     name: "Audition (The Fools Who Dream)",
     image: "",
@@ -618,6 +636,7 @@ export default [{
   }]
 }, {
   title: "Production Design",
+  points: 3,
   nominees: [{
     name: "Arrival",
     image: "100000004760117",
@@ -651,6 +670,7 @@ export default [{
   }]
 }, {
   title: "Cinematography",
+  points: 3,
   nominees: [{
     name: "Arrival",
     image: "100000004760117",
@@ -684,6 +704,7 @@ export default [{
   }]
 }, {
   title: "Costume Design",
+  points: 3,
   nominees: [{
     name: "Allied",
     image: null,
@@ -717,6 +738,7 @@ export default [{
   }]
 }, {
   title: "Makeup",
+  points: 3,
   nominees: [{
     name: "A Man Called Ove",
     image: null,
@@ -738,6 +760,7 @@ export default [{
   }]
 }, {
   title: "Documentary Feature",
+  points: 3,
   nominees: [{
     name: "13th",
     image: null,
@@ -771,6 +794,7 @@ export default [{
   }]
 }, {
   title: "Sound Mixing",
+  points: 3,
   nominees: [{
     name: "La La Land",
     image: "100000004783015",
