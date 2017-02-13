@@ -127,7 +127,7 @@ export default class Ballot extends React.Component {
         <h4>Instructions</h4>
         <ol>
           <li>Fill out this form</li>
-          <li><a href="https://venmo.com">Send $5 to @amarchant on venmo</a></li>
+          <li><a href="https://venmo.com" target="_blank">Send $5 to @amarchant on venmo</a></li>
         </ol>
 
         <h4>Rules</h4>
