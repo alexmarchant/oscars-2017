@@ -14,7 +14,7 @@ export default class Auth extends React.Component {
       signInOptions: [
         window.firebase.auth.FacebookAuthProvider.PROVIDER_ID,
       ],
-      signInFlow: 'popup',
+      signInFlow: 'redirect',
       tosUrl: '/#tos'
     };
     // The start method will wait until the DOM is loaded.
