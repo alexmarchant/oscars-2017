@@ -139,7 +139,6 @@ export default class Ballot extends React.Component {
           <li>All forms need to be completed and payments in before the oscars start (Feb 26 8:30PM EST). I'll lock the form at that point too.</li>
           <li>Each category has a certain number of points assigned. If you get the category right you get the points. Person with the most points wins. Winner take all.</li>
           <li>In case of a tie, the pot will be split evenly.</li>
-          <li>If somehow we get an unexpected number of people playing, > 40, we'll split among the top 3 winners 65% 25% 15%</li>
         </ul>
 
         {_.map(rows, (row, index) => {
