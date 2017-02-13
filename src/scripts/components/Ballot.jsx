@@ -41,7 +41,6 @@ export default class Ballot extends React.Component {
 
       var selectedNominees = snapshot.val() || {};
       selectedNominees = _.omitBy(snapshot.val(), (value, key) => ( key === 'paid' ));
-      console.log(selectedNominees);
       const paid = snapshot.val() ? snapshot.val().paid : false;
 
       this.setState({
