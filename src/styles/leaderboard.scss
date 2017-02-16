@@ -1,0 +1,56 @@
+.leaderboard {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.leaderboard h1,
+.leaderboard h4 {
+  margin-bottom: 0.7em;
+}
+
+.leaderboard__table {
+  border: 1px solid #888;
+}
+
+thead {
+  border-bottom: 1px solid #888;
+  background-color: #efefef;
+}
+
+.leaderboard__row {
+  border-bottom: 1px solid #ccc;
+}
+
+.leaderboard__row:last-child {
+  border: none;
+}
+
+.leaderboard__row.active {
+  background-color: #e5faff;
+}
+
+.leaderboard__cell {
+  padding: 0.3em;
+  border-right: 1px solid #ccc;
+}
+
+.leaderboard__cell:last-child {
+  border: none;
+}
+
+.leaderboard__rank {
+  @extend .leaderboard__cell;
+  width: 30px;
+  text-align: center;
+}
+
+.leaderboard__display-name {
+  @extend .leaderboard__cell;
+  text-align: left;
+}
+
+.leaderboard__score {
+  @extend .leaderboard__cell;
+  width: 75px;
+  text-align: center;
+}
