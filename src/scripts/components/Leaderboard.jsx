@@ -80,7 +80,7 @@ export default class Leaderboard extends React.Component {
                 className={cx('leaderboard__row', data.uid === this.props.currentUser.uid ? 'active' : null)}
                 key={index}
               >
-                <td className="leaderboard__rank">{index}</td>
+                <td className="leaderboard__rank">{index + 1}</td>
                 <td className="leaderboard__display-name">{data.displayName || 'Anon.'}</td>
                 <td className="leaderboard__score">{data.score}</td>
               </tr>
