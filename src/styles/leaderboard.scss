@@ -10,6 +10,7 @@
 
 .leaderboard__table {
   border: 1px solid #888;
+  margin-bottom: 2em;
 }
 
 thead {
@@ -54,3 +55,27 @@ thead {
   width: 75px;
   text-align: center;
 }
+
+.picks {
+}
+
+.picks h2 {
+  margin-bottom: 0.3em;
+}
+
+.picks__category {
+  padding: 0.5em;
+}
+
+.picks__category.won {
+  background-color: #b3f9c0;
+}
+
+.picks__category.lost {
+  background-color: #ffcdcd;
+}
+
+.picks__label {
+  font-weight: 500;
+}
+

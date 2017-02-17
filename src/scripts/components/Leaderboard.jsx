@@ -62,6 +62,11 @@ export default class Leaderboard extends React.Component {
     return score;
   }
 
+  currentUserBallot() {
+    const userData = _.find(this.state.users, {uid: this.props.currentUser.uid});
+    return userData ? userData.ballot : {};
+  }
+
   render() {
     return (
       <div className="leaderboard">
@@ -87,6 +92,33 @@ export default class Leaderboard extends React.Component {
             ))}
           </tbody>
         </table>
+
+        <div className="picks">
+          <h1>Your Picks</h1>
+          {_.map(categories, (category, index) => {
+            const yourPick = this.currentUserBallot() ? this.currentUserBallot()[category.title] : null;
+            const winner = this.state.winners[category.title];
+            const statusClass = winner ? (winner === yourPick ? 'won' : 'lost') : null;
+
+            return (
+              <div className={cx('picks__category', statusClass)} key={index}>
+                <h2>{category.title}</h2>
+                <div>
+                  <span className="picks__label">Your pick:&nbsp;</span>
+                  <span className="picks__value">{yourPick || '--'}</span>
+                </div>
+                <div>
+                  <span className="picks__label">Winner:&nbsp;</span>
+                  <span className="picks__value">{winner || '--'}</span>
+                </div>
+                <div>
+                  <span className="picks__label">Points:&nbsp;</span>
+                  <span className="picks__value">{category.points}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
