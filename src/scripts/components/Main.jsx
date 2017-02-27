@@ -37,10 +37,10 @@ export default class Main extends React.Component {
     switch (window.location.hash) {
       case '#/admin':
         return <Admin />;
-      case '#/leaderboard':
-        return <Leaderboard currentUser={this.props.currentUser} />;
-      default:
+      case '#/ballot':
         return <Ballot currentUser={this.props.currentUser} />;
+      default:
+        return <Leaderboard currentUser={this.props.currentUser} />;
     }
   }
 
